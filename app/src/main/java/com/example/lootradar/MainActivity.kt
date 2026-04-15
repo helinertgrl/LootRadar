@@ -4,23 +4,32 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.lootradar.ui.theme.LootRadarTheme
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val dao = LootDatabase.getDatabase(applicationContext).gamedao()
+        val api = DummyGameApi()
+        val repository = GameRepository(dao,api)
+        val factory = GameViewModelFactory(repository)
+        val myViewModel = ViewModelProvider(this, factory)[GameViewModel::class.java]
+
         setContent {
             LootRadarTheme {
-
+                LootScreen(viewModel = myViewModel)
             }
         }
+    }
+}
+
+class DummyGameApi(): GameApi{
+    override suspend fun fetchLootGames(): List<GameEntity> {
+        return listOf(
+            GameEntity(0,"meowmagic","steam","%50 indirim",false),
+            GameEntity(1,"eworlds","epic","%10 indirim",false))
     }
 }
