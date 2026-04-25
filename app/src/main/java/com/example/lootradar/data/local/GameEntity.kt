@@ -1,4 +1,4 @@
-package com.example.lootradar
+package com.example.lootradar.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,5 +19,3 @@ data class GameEntity(
 
     val isSaved: Boolean = false
 )
-
-

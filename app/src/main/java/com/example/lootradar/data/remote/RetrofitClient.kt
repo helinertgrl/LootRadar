@@ -1,4 +1,4 @@
-package com.example.lootradar
+package com.example.lootradar.data.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

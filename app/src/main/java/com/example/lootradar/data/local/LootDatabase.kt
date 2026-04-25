@@ -1,4 +1,4 @@
-package com.example.lootradar
+package com.example.lootradar.data.local
 
 import android.content.Context
 import androidx.room.Database

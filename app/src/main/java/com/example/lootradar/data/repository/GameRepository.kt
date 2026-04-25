@@ -1,5 +1,8 @@
-package com.example.lootradar
+package com.example.lootradar.data.repository
 
+import com.example.lootradar.data.local.GameDao
+import com.example.lootradar.data.local.GameEntity
+import com.example.lootradar.data.remote.GameApi
 import kotlinx.coroutines.flow.Flow
 
 class GameRepository(private val gameDao: GameDao, private val gameapi: GameApi) {
