@@ -2,14 +2,21 @@ package com.example.lootradar
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "games_table")
 data class GameEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: Int,
+
     val title: String,
+
+    @SerializedName("platforms")
     val platform: String,
+
+    @SerializedName("worth")
     val discountInfo: String,
+
     val isSaved: Boolean = false
 )
 

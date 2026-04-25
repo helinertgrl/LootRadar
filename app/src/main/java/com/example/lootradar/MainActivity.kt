@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         val dao = LootDatabase.getDatabase(applicationContext).gamedao()
-        val api = DummyGameApi()
+        val api = RetrofitClient.api
         val repository = GameRepository(dao,api)
         val factory = GameViewModelFactory(repository)
         val myViewModel = ViewModelProvider(this, factory)[GameViewModel::class.java]
@@ -23,13 +23,5 @@ class MainActivity : ComponentActivity() {
                 LootScreen(viewModel = myViewModel)
             }
         }
-    }
-}
-
-class DummyGameApi(): GameApi{
-    override suspend fun fetchLootGames(): List<GameEntity> {
-        return listOf(
-            GameEntity(0,"meowmagic","steam","%50 indirim",false),
-            GameEntity(1,"eworlds","epic","%10 indirim",false))
     }
 }
