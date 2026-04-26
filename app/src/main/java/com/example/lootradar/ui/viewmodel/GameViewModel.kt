@@ -4,11 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lootradar.data.local.GameEntity
 import com.example.lootradar.data.repository.GameRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GameViewModel(private val repository: GameRepository): ViewModel() {
+@HiltViewModel
+class GameViewModel @Inject constructor(
+    private val repository: GameRepository): ViewModel() {
     private val _gameloots = MutableStateFlow<List<GameEntity>>(emptyList())
     val gameloots: StateFlow<List<GameEntity>> = _gameloots
 

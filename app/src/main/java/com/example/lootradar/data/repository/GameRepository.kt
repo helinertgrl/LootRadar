@@ -4,8 +4,10 @@ import com.example.lootradar.data.local.GameDao
 import com.example.lootradar.data.local.GameEntity
 import com.example.lootradar.data.remote.GameApi
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GameRepository(private val gameDao: GameDao, private val gameapi: GameApi) {
+class GameRepository @Inject constructor(
+    private val gameDao: GameDao, private val gameapi: GameApi) {
     fun getAllGamesLive(): Flow<List<GameEntity>> {
         return gameDao.getAllGames()
     }
