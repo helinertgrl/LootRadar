@@ -1,3 +1,4 @@
+# 🎮 LootRadar (Work in Progress 🚧)
 LootRadar, çeşitli dijital oyun platformlarındaki ücretsiz ve indirime giren oyunları anlık olarak takip edip kullanıcıya haber veren bir Android uygulamasıdır. 
 
 *Not: Bu proje şu anda aktif olarak geliştirilme aşamasındadır.*
