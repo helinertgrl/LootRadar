@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lootradar.data.local.GameEntity
 import com.example.lootradar.data.repository.GameRepository
+import com.example.lootradar.domain.usecase.GetGamesUseCase
+import com.example.lootradar.domain.usecase.RefreshGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,13 +15,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    private val repository: GameRepository): ViewModel() {
+    private val getGamesUseCase: GetGamesUseCase,
+    private val refreshGamesUseCase: RefreshGamesUseCase): ViewModel() {
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
     val uiState: StateFlow<GameUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            repository.getAllGamesLive().collect{ list ->
+           getGamesUseCase().collect{ list ->
                 _uiState.value = GameUiState.Success(list)
             }
         }
@@ -29,7 +32,7 @@ class GameViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = GameUiState.Loading
             try {
-                repository.refreshGames()
+                refreshGamesUseCase()
             }catch (e: Exception){
                 _uiState.value = GameUiState.Error(e.message ?: "Bilinmeyen Hata")
             }
