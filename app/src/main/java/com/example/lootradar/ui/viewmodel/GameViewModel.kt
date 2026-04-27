@@ -1,5 +1,6 @@
 package com.example.lootradar.ui.viewmodel
 
+import androidx.compose.material3.Text
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lootradar.data.local.GameEntity
@@ -13,20 +14,25 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val repository: GameRepository): ViewModel() {
-    private val _gameloots = MutableStateFlow<List<GameEntity>>(emptyList())
-    val gameloots: StateFlow<List<GameEntity>> = _gameloots
+    private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
+    val uiState: StateFlow<GameUiState> = _uiState
 
     init {
         viewModelScope.launch {
-            repository.getAllGamesLive().collect{ currentList ->
-                _gameloots.value = currentList
+            repository.getAllGamesLive().collect{ list ->
+                _uiState.value = GameUiState.Success(list)
             }
         }
     }
 
     fun fetchDeals(){
         viewModelScope.launch {
-            repository.refreshGames()
+            _uiState.value = GameUiState.Loading
+            try {
+                repository.refreshGames()
+            }catch (e: Exception){
+                _uiState.value = GameUiState.Error(e.message ?: "Bilinmeyen Hata")
+            }
         }
     }
 }
