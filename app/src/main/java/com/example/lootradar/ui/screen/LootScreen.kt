@@ -3,6 +3,7 @@ package com.example.lootradar.ui.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,36 +23,55 @@ import com.example.lootradar.ui.viewmodel.GameViewModel
 fun LootScreen(viewModel: GameViewModel){
 
     val state by viewModel.uiState.collectAsState()
+    val platforms = listOf("Hepsi","Steam", "Epic","Ubisoft", "GOG")
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-
-        when(val currentState = state){
-            is GameUiState.Loading -> {CircularProgressIndicator()}
-            is GameUiState.Error -> {
-                Column (
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    Text(currentState.message)
-                    Button(onClick = {viewModel.fetchDeals()}) {
-                        Text("Tekrar Dene")
-                    }
-                }
-
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ){ platforms.forEach { platforms->
+            Button(onClick = {
+                viewModel.saveFilter(platforms)
+            }) {
+                Text(platforms)
             }
-            is GameUiState.Success -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(onClick = {viewModel.fetchDeals()}) {
-                        Text("Fırsatları Yenile")
-                    }
-                    LazyColumn {
-                        items(currentState.games){ game ->
-                            Text(text = "Oyun: ${game.title} | ${game.platform} | ${game.discountInfo}")
+        }
+        }
+
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .weight(1f),
+            contentAlignment = Alignment.Center) {
+
+            when(val currentState = state){
+                is GameUiState.Loading -> {CircularProgressIndicator()}
+                is GameUiState.Error -> {
+                    Column (
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        Text(currentState.message)
+                        Button(onClick = {viewModel.fetchDeals()}) {
+                            Text("Tekrar Dene")
                         }
+                    }
+
                 }
-            }
+                is GameUiState.Success -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(onClick = {viewModel.fetchDeals()}) {
+                            Text("Fırsatları Yenile")
+                        }
+                        LazyColumn {
+                            items(currentState.games){ game ->
+                                Text(text = "Oyun: ${game.title} | ${game.platform} | ${game.discountInfo}")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+

@@ -1,6 +1,7 @@
 package com.example.lootradar.di
 
 import android.content.Context
+import com.example.lootradar.data.local.FilterManager
 import com.example.lootradar.data.local.GameDao
 import com.example.lootradar.data.local.LootDatabase
 import com.example.lootradar.data.remote.GameApi
@@ -32,5 +33,11 @@ object AppModule {
     @Singleton
     fun provideGameDao(database: LootDatabase): GameDao {
         return database.gamedao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilterManager(@ApplicationContext context: Context): FilterManager{
+        return FilterManager(context)
     }
 }

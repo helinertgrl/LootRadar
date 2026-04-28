@@ -3,6 +3,7 @@ package com.example.lootradar.ui.viewmodel
 import androidx.compose.material3.Text
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.lootradar.data.local.FilterManager
 import com.example.lootradar.data.local.GameEntity
 import com.example.lootradar.data.repository.GameRepository
 import com.example.lootradar.domain.usecase.GetGamesUseCase
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     private val getGamesUseCase: GetGamesUseCase,
-    private val refreshGamesUseCase: RefreshGamesUseCase): ViewModel() {
+    private val refreshGamesUseCase: RefreshGamesUseCase,
+    private val filterManager: FilterManager): ViewModel() {
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
     val uiState: StateFlow<GameUiState> = _uiState
 
@@ -36,6 +38,12 @@ class GameViewModel @Inject constructor(
             }catch (e: Exception){
                 _uiState.value = GameUiState.Error(e.message ?: "Bilinmeyen Hata")
             }
+        }
+    }
+
+    fun saveFilter(platform: String){
+        viewModelScope.launch {
+            filterManager.savePlatform(platform)
         }
     }
 }
