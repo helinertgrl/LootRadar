@@ -16,7 +16,7 @@ class GetGamesUseCase @Inject constructor(
            if (selectedPlatform == "Hepsi") {
                games
            } else{
-               games.filter { it.platform == selectedPlatform }
+               games.filter { it.platform.contains(selectedPlatform,ignoreCase = true) }
            }
        }
     }
