@@ -3,17 +3,20 @@ package com.example.lootradar.ui.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,15 +38,16 @@ fun LootScreen(viewModel: GameViewModel){
     val platforms = listOf("Hepsi","Steam", "Epic","Ubisoft", "GOG")
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ){ platforms.forEach { platforms->
-            Button(onClick = {
-                viewModel.saveFilter(platforms)
-            }) {
-                Text(platforms)
-            }
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        ) { items(platforms) { platform ->
+
+            FilterChip(
+                selected = true,
+                onClick = { viewModel.saveFilter(platform)},
+                label = {Text(platform)}
+            )
         }
         }
 
