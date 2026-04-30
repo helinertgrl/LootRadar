@@ -15,8 +15,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -80,20 +83,29 @@ fun LootScreen(viewModel: GameViewModel){
                             items(currentState.games){ game ->
                                 Card(
                                     modifier = Modifier.fillMaxWidth()
-                                        .padding(8.dp)
+                                        .padding(8.dp),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                                 ) {
-                                    Row (verticalAlignment = Alignment.CenterVertically){
+                                    Row (modifier = Modifier.padding(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically){
                                         AsyncImage(
                                             model = game.thumbnail,
                                             contentDescription = "Kapak Resmi",
-                                            modifier = Modifier.size(120.dp,60.dp)
+                                            modifier = Modifier.size(120.dp,68.dp)
                                                 .clip(RoundedCornerShape(8.dp)),
                                             contentScale = ContentScale.Crop
                                         )
                                         Column( modifier = Modifier.padding(start = 8.dp)) {
-                                            Text(game.title, fontWeight = FontWeight.Bold)
-                                            Text(game.platform)
-                                            Text(game.discountInfo)
+                                            Text(game.title,
+                                                fontWeight = FontWeight.Bold,
+                                                style = MaterialTheme.typography.titleMedium)
+                                            Text(game.platform,
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = Color.Gray
+                                            )
+                                            Text(game.discountInfo,
+                                                style = MaterialTheme.typography.labelLarge,
+                                                color = Color(0xFF388E3C))
                                         }
                                     }
                                 }
