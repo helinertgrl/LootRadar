@@ -30,9 +30,11 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun fetchDeals(){
+    fun fetchDeals(isSwipeToRefresh: Boolean = false){
         viewModelScope.launch {
-            _uiState.value = GameUiState.Loading
+            if (!isSwipeToRefresh){
+                _uiState.value = GameUiState.Loading
+            }
             try {
                 refreshGamesUseCase()
             }catch (e: Exception){
