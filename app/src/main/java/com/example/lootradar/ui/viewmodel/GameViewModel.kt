@@ -22,23 +22,33 @@ class GameViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
     val uiState: StateFlow<GameUiState> = _uiState
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     init {
         viewModelScope.launch {
            getGamesUseCase().collect{ list ->
                 _uiState.value = GameUiState.Success(list)
             }
         }
+        fetchDeals()
     }
 
     fun fetchDeals(isSwipeToRefresh: Boolean = false){
         viewModelScope.launch {
-            if (!isSwipeToRefresh){
+            if (isSwipeToRefresh){
+                _isRefreshing.value = true
+            }else{
                 _uiState.value = GameUiState.Loading
             }
             try {
                 refreshGamesUseCase()
             }catch (e: Exception){
-                _uiState.value = GameUiState.Error(e.message ?: "Bilinmeyen Hata")
+                if (!isSwipeToRefresh) {
+                    _uiState.value = GameUiState.Error(e.message ?: "Bilinmeyen Hata")
+                }
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }

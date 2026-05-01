@@ -15,8 +15,8 @@ data class GameEntity(
     val platform: String,
 
     @SerializedName("worth")
-    val discountInfo: String,
+    val worth: String? = "N/A",
 
     val isSaved: Boolean = false,
-    val thumbnail: String
+    val thumbnail: String,
 )
