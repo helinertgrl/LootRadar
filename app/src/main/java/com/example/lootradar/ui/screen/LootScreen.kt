@@ -1,6 +1,7 @@
 package com.example.lootradar.ui.screen
 
 import android.R
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -122,7 +123,7 @@ fun LootScreen(viewModel: GameViewModel){
                                                     fontWeight = FontWeight.Bold,
                                                     style = MaterialTheme.typography.titleMedium,
                                                     maxLines = 1,
-                                                    overflow = TextOverflow.Ellipsis)
+                                                    modifier = Modifier.basicMarquee())
 
                                                 //Platform
                                                 Row (verticalAlignment = Alignment.CenterVertically){
