@@ -23,13 +23,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.lootradar.data.local.GameEntity
 import com.example.lootradar.domain.Rarity
+import com.example.lootradar.ui.theme.PixelFontFamily
+import com.example.lootradar.ui.theme.PixelFontFamilyBold
 
 @Composable
 fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
@@ -77,7 +81,9 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp, vertical = 6.dp),
                 Alignment.Center
             ){
-                Text(rarity.name, color = Color.Black)
+                Text(rarity.name.uppercase(),
+                    fontFamily = PixelFontFamilyBold,
+                    fontSize = 16.sp)
             }
 
             Row (
@@ -88,15 +94,27 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
                         .padding(start = 4.dp),
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text("Platform: ${game.platform}")
+                    Text("Platform: ${game.platform}",
+                        fontFamily = PixelFontFamilyBold,
+                        fontSize = 14.sp
+                    )
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text("Type: ${game.type}")
+                    Text("Type: ${game.type}",
+                        fontFamily = PixelFontFamilyBold,
+                        fontSize = 14.sp
+                    )
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text("Worth: ${game.worth}")
+                    Text("Worth: ${game.worth}",
+                        fontFamily = PixelFontFamilyBold,
+                        fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text("Claimed: ${game.users}")
+                    Text("Claimed: ${game.users}",
+                        fontFamily = PixelFontFamilyBold,
+                        fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text("Expires: ${game.endDate}")
+                    Text("Expires: ${game.endDate}",
+                        fontFamily = PixelFontFamilyBold,
+                        fontSize = 14.sp)
                 }
 
                 Spacer(Modifier.weight(1f))
@@ -124,7 +142,9 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.Center
             )
             {
-                Text(game.title)
+                Text(game.title,
+                    fontFamily = PixelFontFamilyBold,
+                    fontSize = 18.sp)
             }
         }
     }
