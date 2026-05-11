@@ -3,6 +3,7 @@ package com.example.lootradar.ui.components
 import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -82,12 +83,20 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
             Row (
                 modifier = Modifier.padding(16.dp)
             ){
-                Column {
+                Column(
+                    modifier = Modifier.height(110.dp)
+                        .padding(start = 4.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
                     Text("Platform: ${game.platform}")
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text("Type: ${game.type}")
                     Spacer(modifier = Modifier.height(6.dp))
                     Text("Worth: ${game.worth}")
                     Spacer(modifier = Modifier.height(6.dp))
                     Text("Claimed: ${game.users}")
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text("Expires: ${game.endDate}")
                 }
 
                 Spacer(Modifier.weight(1f))

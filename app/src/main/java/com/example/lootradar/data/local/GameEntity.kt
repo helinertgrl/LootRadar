@@ -1,5 +1,6 @@
 package com.example.lootradar.data.local
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -19,6 +20,15 @@ data class GameEntity(
 
     val users: Int? = 0,
 
+    @ColumnInfo(name = "is_saved")
     val isSaved: Boolean = false,
+
     val thumbnail: String,
+
+    @SerializedName("end_date")
+    @ColumnInfo(name = "end_date")
+    val endDate: String? = "N/A",
+
+    @SerializedName("type")
+    val type: String? = "Unknown"
 )
