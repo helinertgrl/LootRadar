@@ -34,10 +34,22 @@ import com.example.lootradar.domain.Rarity
 fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
 
     val rarity = Rarity.fromPrice(game.worth)
-    val slantedShape = RoundedCornerShape(topStart = 227.dp, topEnd = 45.dp, bottomStart = 45.dp, bottomEnd = 227.dp)
+    val slantedShape = RoundedCornerShape(
+        topStart = 227.dp,
+        topEnd = 45.dp,
+        bottomStart = 45.dp,
+        bottomEnd = 227.dp
+    )
+    val titleShape = RoundedCornerShape(
+        topStart = 121.dp,
+        topEnd = 45.dp,
+        bottomStart = 45.dp,
+        bottomEnd = 121.dp
+    )
 
     Card(
         shape = RoundedCornerShape(28.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -94,10 +106,11 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 16.dp)
+                    .padding(start = 2.dp, top = 2.dp)
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp))
+                    .clip(titleShape)
                     .background(rarity.badgeColor)
-                    .border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp))
+                    .border(width = 2.dp, color = Color.Black, shape = titleShape)
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             )
