@@ -34,15 +34,17 @@ import com.example.lootradar.domain.Rarity
 fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
 
     val rarity = Rarity.fromPrice(game.worth)
+    val slantedShape = RoundedCornerShape(topStart = 227.dp, topEnd = 45.dp, bottomStart = 45.dp, bottomEnd = 227.dp)
 
     Card(
+        shape = RoundedCornerShape(28.dp),
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
             .border(
             width = 2.dp,
             color = rarity.badgeColor,
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(28.dp)
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFC6CED4)
@@ -51,14 +53,16 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
         Column {
             Box(
                 modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp))
+                    .padding(start = 2.dp, top = 2.dp)
+                .clip(slantedShape)
                 .background(rarity.badgeColor)
                 .border(
-                    width = 2.dp,
+                    width = 1.5.dp,
                     color = Color.Black,
-                    shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 16.dp)
+                    shape = slantedShape
                 )
-                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .padding(horizontal = 16.dp, vertical = 6.dp),
+                Alignment.Center
             ){
                 Text(rarity.name, color = Color.Black)
             }
@@ -80,7 +84,7 @@ fun GameCard(game: GameEntity, modifier: Modifier = Modifier) {
                     model = game.thumbnail,
                     contentDescription = "picture",
                     modifier = Modifier
-                        .size(120.dp,80.dp)
+                        .size(160.dp,110.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .border(2.dp, color = Color.Black, RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Crop
